@@ -3,7 +3,7 @@ package entities;
 public class Student extends Person {
 
     private int serialNumber;
-    private int counter;
+    private static int counter;
 
     public Student(String name, String surname) {
 
