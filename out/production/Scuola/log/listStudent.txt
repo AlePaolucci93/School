@@ -22,7 +22,3 @@ Alessio Giannetti 1
 Fulvio Berretta 2
 Marco Berretta 3
 Alessio Paolucci 4
-Alessio Giannetti 1
-Fulvio Berretta 2
-Marco Berretta 3
-Alessio Paolucci 4

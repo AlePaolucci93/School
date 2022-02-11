@@ -1,13 +1,19 @@
 package entities;
 
+import exception.NotFoundException;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class School {
+
     Student student;
 
     static public List<Student> listStudent = new ArrayList<>();
-    static List<Tutor> listTutor = new ArrayList<>();
+    public static List<Tutor> listTutor = new ArrayList<>();
+
+    static public Map<Student, Tutor> mapStudentTutor = new HashMap<>();
+    static public Map<Tutor, List<Student>> mapTutorStudent = new HashMap<>();
 
     public static void addPerson(Person person){
         String StrSurname = person.getSurname().substring(0,1).toUpperCase() + person.getSurname().substring(1).toLowerCase();
@@ -35,6 +41,10 @@ public class School {
                 .collect(Collectors.toList())
                 .toArray(new Tutor[0]);
     }
+
+
+
+
 
 
 }

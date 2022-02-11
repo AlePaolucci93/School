@@ -1,10 +1,21 @@
-package it.unikey;import control.FileLog;
+package it.unikey;
+
+import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
+import control.FileLog;
 
 import entities.School;
 import entities.Student;
-import entities.Tutor;import java.time.LocalDate;
+import entities.Tutor;
+import fileGestion.FileGestion;
 
-import java.util.Arrays;public class Main { public static void main(String[] args) {
+import java.time.LocalDate;
+
+import java.util.Arrays;
+
+import static entities.School.mapStudentTutor;
+import static entities.School.mapTutorStudent;
+
+public class Main { public static void main(String[] args) {
 
     FileLog.checkUser("alessiog", "1234a"); School.addPerson(new Student("alEssio","GIAnnetti"));
 
@@ -18,6 +29,19 @@ import java.util.Arrays;public class Main { public static void main(String[] arg
     Arrays.stream(School.changeListStudentToArr()).forEach(System.out::println);
     System.out.println("--------------------");
     Arrays.stream(School.changeListTutorToArr()).forEach(System.out::println);
+
+    FileGestion.writeListStudent();
+    FileGestion.writeListTutor();
+
+    Tutor mario = new Tutor("Mario", "Rossi", "1990-05-14");
+    Student luca = new Student("Luca", "Verdi");
+    mario.insertTutor(luca);
+
+    //per ogni tutor presente nel mapTutorStudent stampa la lista di studenti associati
+    for (Tutor elem: mapTutorStudent.keySet()) {
+        System.out.println("Lista di studenti del tutor " + elem.getName() + ": \n" + mapTutorStudent.get(elem));
+    }
+
 
     }
 
