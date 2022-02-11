@@ -29,6 +29,7 @@ public class Tutor extends Person {
         for (Tutor tutor : mapTutorStudent.keySet()) { //ciclo per ogni tutor di tipo Tutor presente nel set delle chiavi di quella det mappa (a dx mi dice dove vado a prenderli)
             if (tutor.getIdTutor() == this.idTutor)
                 return true;
+
         }
         return false;
     }
@@ -42,7 +43,7 @@ public class Tutor extends Person {
 
     public void assignStudentToTutor(Student student) {
         try {
-            if(student.hasAssignedTutor()) {
+            if(!student.hasAssignedTutor()) {
                 if (!this.tutorIsPresentInHashMap()) {
                     Set<Student> setStudent = new HashSet<>();
                     setStudent.add(student);
@@ -50,8 +51,10 @@ public class Tutor extends Person {
                 } else {
                     mapTutorStudent.get(this).add(student);
                 }
-            }else
-                throw new TutorAlreadyExsistsException("Questo studente ha già un tutor assegnato!");
+            }else {
+                throw new TutorAlreadyExsistsException(student, this);
+            }
+
         }  catch (TutorAlreadyExsistsException e) {
             e.printStackTrace();
         }
