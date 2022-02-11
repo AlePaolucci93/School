@@ -9,11 +9,11 @@ public class School {
 
     Student student;
 
-    static public List<Student> listStudent = new ArrayList<>();
-    public static List<Tutor> listTutor = new ArrayList<>();
+    public static Set<Student> setStudent = new HashSet<>();
+    public static Set<Tutor> setTutor = new HashSet<>();
 
     static public Map<Student, Tutor> mapStudentTutor = new HashMap<>();
-    static public Map<Tutor, List<Student>> mapTutorStudent = new HashMap<>();
+    static public Map<Tutor, Set<Student>> mapTutorStudent = new HashMap<>();
 
     public static void addPerson(Person person){
         String StrSurname = person.getSurname().substring(0,1).toUpperCase() + person.getSurname().substring(1).toLowerCase();
@@ -21,22 +21,22 @@ public class School {
         person.setSurname(StrSurname);
         person.setName(StrName);
         if(person instanceof Student){
-            listStudent.add((Student) person);
+            setStudent.add((Student) person);
         } else
-            listTutor.add((Tutor) person);
+            setTutor.add((Tutor) person);
     }
 
 
-    public static Student[] changeListStudentToArr(){
-        return listStudent.stream()
+    public static Student[] changeSetStudentToArr(){
+        return setStudent.stream()
                 .sorted(Comparator.comparing(Student::getSurname).thenComparing(Person::getName))
                 .collect(Collectors.toList())
                 .toArray(new Student[0]);
     }
 
 
-    public static Tutor[] changeListTutorToArr(){
-        return listTutor.stream()
+    public static Tutor[] changeSetTutorToArr(){
+        return setTutor.stream()
                 .sorted(Comparator.comparing(Tutor::getSurname).thenComparing(Tutor::getName))
                 .collect(Collectors.toList())
                 .toArray(new Tutor[0]);

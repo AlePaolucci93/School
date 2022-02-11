@@ -1,5 +1,7 @@
 package entities;
 
+import static entities.School.*;
+
 public class Student extends Person {
 
     private int serialNumber;
@@ -10,7 +12,14 @@ public class Student extends Person {
         super(name, surname);
         counter ++;
         this.serialNumber = counter;
+    }
 
+    //metodo per capire se lo studente ha un tutor
+    //Lo scopo di questo metodo è evitare che ad un singolo studente siano assegnati più tutor
+    public boolean hasAssignedTutor(){
+        boolean isPresentInStudentsSet = setStudent.stream().anyMatch(elem -> elem.equals(this));
+        boolean isPresentInTutorsSet = mapTutorStudent.keySet().stream().anyMatch(elem -> mapTutorStudent.get(elem).equals(this));
+        return (isPresentInStudentsSet && !isPresentInTutorsSet) ? false : true;
     }
 
     public int getSerialNumber() {

@@ -38,7 +38,7 @@ public class FileLog {
                     if (mapUser.get(a).equals(password))
                         System.out.println("L'user è esistente");
                     else
-                        throw new PasswordNotFoundException("Non sei registrato");
+                        throw new PasswordNotFoundException("Non sei registrato!");
                 }
             }
         } catch (FileNotFoundException e) {

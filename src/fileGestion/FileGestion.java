@@ -1,11 +1,6 @@
 package fileGestion;
 
-
-
 import entities.School;
-
-
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -19,7 +14,7 @@ public class FileGestion {
     static String pathTutor = "C:\\Users\\paolu\\IdeaProjects\\Scuola\\src\\log\\listTutor.txt";
 
     public static void writeListStudent(){
-        School.listStudent.forEach(s -> {
+        School.setStudent.forEach(s -> {
             try {
                 Files.write(Paths.get(pathStudent),(s.toString() + "\n").getBytes(), StandardOpenOption.APPEND);
             } catch (IOException e) {
@@ -29,7 +24,7 @@ public class FileGestion {
     }//end method
 
     public static void writeListTutor() {
-        School.listTutor.forEach(s -> {
+        School.setTutor.forEach(s -> {
             try {
                 Files.write(Paths.get(pathTutor), (s.toString() + "\n").getBytes(), StandardOpenOption.APPEND);
             } catch (IOException e) {

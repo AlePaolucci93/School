@@ -1,14 +1,12 @@
 package entities;
 
 import exception.NotFoundException;
+import exception.TutorAlreadyExsistsException;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Optional;
+import java.util.*;
 
-import static entities.School.listTutor;
-import static entities.School.mapTutorStudent;
+import static entities.School.*;
 
 public class Tutor extends Person {
 
@@ -28,8 +26,8 @@ public class Tutor extends Person {
 
     //metodo per controllare se il tutor è presente nella mappa importata in questa classe e presente in School
     public boolean tutorIsPresentInHashMap() {
-        for (Tutor tutor : mapTutorStudent.keySet()) {
-            if(tutor.getIdTutor() == this.idTutor)
+        for (Tutor tutor : mapTutorStudent.keySet()) { //ciclo per ogni tutor di tipo Tutor presente nel set delle chiavi di quella det mappa (a dx mi dice dove vado a prenderli)
+            if (tutor.getIdTutor() == this.idTutor)
                 return true;
         }
         return false;
@@ -42,14 +40,30 @@ public class Tutor extends Person {
                 .findFirst();
     }*/
 
-    public void insertTutor(Student student) {
-        if (!this.tutorIsPresentInHashMap()) {
-            mapTutorStudent.put(this, new ArrayList<>(Arrays.asList(student)));
-        } else {
-            mapTutorStudent.get(this).add(student);
+    public void assignStudentToTutor(Student student) {
+        try {
+            if(student.hasAssignedTutor()) {
+                if (!this.tutorIsPresentInHashMap()) {
+                    Set<Student> setStudent = new HashSet<>();
+                    setStudent.add(student);
+                    mapTutorStudent.put(this, setStudent);
+                } else {
+                    mapTutorStudent.get(this).add(student);
+                }
+            }else
+                throw new TutorAlreadyExsistsException("Questo studente ha già un tutor assegnato!");
+        }  catch (TutorAlreadyExsistsException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //per ogni tutor presente nel mapTutorStudent stampa la lista di studenti associati
+    public static void printStudentForTutor() {
+        for (Tutor elem : mapTutorStudent.keySet()) {
+            System.out.println("Lista di studenti del tutor " + elem.getName() + ": \n" + mapTutorStudent.get(elem));
+            }
         }
 
-    }
 
     public LocalDate getBirthDate() {
         return birthDate;

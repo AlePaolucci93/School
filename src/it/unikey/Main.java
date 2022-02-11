@@ -2,46 +2,52 @@ package it.unikey;
 
 import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
 import control.FileLog;
-
 import entities.School;
 import entities.Student;
 import entities.Tutor;
 import fileGestion.FileGestion;
-
 import java.time.LocalDate;
-
 import java.util.Arrays;
-
 import static entities.School.mapStudentTutor;
 import static entities.School.mapTutorStudent;
 
-public class Main { public static void main(String[] args) {
+public class Main {
+    public static void main(String[] args) {
 
-    FileLog.checkUser("alessiog", "1234a"); School.addPerson(new Student("alEssio","GIAnnetti"));
+        FileLog.checkUser("alessiog", "1234a");
 
-    School.addPerson(new Student("fulvIO", "berretta"));
-    School.addPerson(new Student("marco", "berretta"));
-    School.addPerson(new Student("alessio", "paolucci"));
+        Tutor francesco = new Tutor("francesco", "di rosa", "1993-12-11");
+        Tutor sara = new Tutor("sara", "gaudiosi", "1994-10-20");
+        Tutor mario = new Tutor("Mario", "Rossi", "1990-05-14");
+        Student luca = new Student("Luca", "Verdi");
+        Student gianni = new Student("Gianni", "Morandi");
+        Student alessiog = new Student("alEssio", "GIAnnetti");
+        Student fulvio = new Student("fulvIO", "berretta");
+        Student marco = new Student("marco", "berretta");
+        Student alessiop = new Student("alessio", "paolucci");
+        Student gianni2 = new Student("Gianni", "Morandi");
 
-    School.addPerson(new Tutor("francesco","di rosa", "1993-12-11"));
-    School.addPerson(new Tutor("sara","gaudiosi", "1994-10-20"));
-    System.out.println("--------------------");
-    Arrays.stream(School.changeListStudentToArr()).forEach(System.out::println);
-    System.out.println("--------------------");
-    Arrays.stream(School.changeListTutorToArr()).forEach(System.out::println);
+        School.addPerson(alessiog);
+        School.addPerson(fulvio);
+        School.addPerson(marco);
+        School.addPerson(alessiop);
+        School.addPerson(gianni2);
+        School.addPerson(francesco);
+        School.addPerson(sara);
 
-    FileGestion.writeListStudent();
-    FileGestion.writeListTutor();
+        System.out.println("--------------------");
+        Arrays.stream(School.changeSetStudentToArr()).forEach(System.out::println);
+        System.out.println("--------------------");
+        Arrays.stream(School.changeSetTutorToArr()).forEach(System.out::println);
 
-    Tutor mario = new Tutor("Mario", "Rossi", "1990-05-14");
-    Student luca = new Student("Luca", "Verdi");
-    mario.insertTutor(luca);
+        FileGestion.writeListStudent();
+        FileGestion.writeListTutor();
 
-    //per ogni tutor presente nel mapTutorStudent stampa la lista di studenti associati
-    for (Tutor elem: mapTutorStudent.keySet()) {
-        System.out.println("Lista di studenti del tutor " + elem.getName() + ": \n" + mapTutorStudent.get(elem));
-    }
-
+        mario.assignStudentToTutor(luca);
+        francesco.assignStudentToTutor(luca);
+        mario.assignStudentToTutor(gianni);
+        mario.assignStudentToTutor(gianni2);
+        Tutor.printStudentForTutor();
 
     }
 
